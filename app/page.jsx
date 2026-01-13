@@ -5,6 +5,7 @@ import { fetchMedia, setQuery, setActiveTab } from '@/src/store/features/searchS
 import React from 'react'
 import ResultCard from '@/src/components/ResultCard';
 import Link from 'next/link';
+import Header from '@/src/components/Header';
 const page = () => {
   const observerRef = useRef(null);
   const dispatch = useDispatch();
@@ -32,29 +33,13 @@ const page = () => {
   }, [query]);
   return (
     <div>
-      <input type="text" className='' value={search} onChange={(e) => setSearch(e.target.value)} />
-      <button onClick={handleSearch}>Search</button>
-      <button onClick={() => {
-        setPageCount(1);
-        dispatch(setActiveTab("photo"));
-      }}>
-        photo
-      </button>
-
-      <button onClick={() => {
-        setPageCount(1);
-        dispatch(setActiveTab("video"));
-      }}>
-        Video
-      </button>
-
-      <div className='grid grid-cols-3'>
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch}/>
+      <div className='grid grid-cols-3 gap-2'>
         {results.map((item, index) => (
           <ResultCard key={index} data={item} />
         ))}
       </div>
-      <div ref={observerRef}>Observer</div>
-      <Link href={'/collection'}>Colection</Link>
+      <div ref={observerRef} className='h-4'></div>
     </div>
   )
 }

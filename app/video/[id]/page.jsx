@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import ResultCard from "@/src/components/ResultCard";
 import { AddLikedItem, RemoveLikedItem } from "@/src/store/features/collectionSlice";
+import { ArrowLeft,Heart } from "lucide-react";
 
 const page = () => {
     const { id } = useParams();
@@ -30,7 +31,7 @@ const page = () => {
     if (!data) return <div>waait</div>
     return (
         <div>
-            <Link href={'/'}>Go back</Link>
+            <Link href={'/'}><ArrowLeft/></Link>
             <video
                 width="640"
                 height="360"
@@ -43,7 +44,8 @@ const page = () => {
                 Your browser does not support the video tag.
             </video>
             <p>{data.thumb_description}</p>
-            <button onClick={handleLike}>
+            <button onClick={handleLike} className="flex gap-1 items-center">
+                <Heart/>
                 {isLiked ? "Unlike" : "Like"}
             </button>
             <a href={data.video_url} download>download</a>
