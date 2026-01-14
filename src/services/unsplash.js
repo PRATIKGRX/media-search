@@ -1,4 +1,4 @@
-export async function fetchImages(query, page = 1) {
+export async function fetchImages(query, page) {
     const res = await fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${query}`, {
         headers: {
             Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`

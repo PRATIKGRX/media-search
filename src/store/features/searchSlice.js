@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchMedia = createAsyncThunk(
     "search/fetchMedia",
-    async ({page}, { getState, rejectWithValue }) => {
+    async ({page,query,activeTab}, { rejectWithValue }) => {
         try {
-            const { query, activeTab } = getState().search;
+
             if (!query || query.trim() === "") return [];
             const res = await fetch(`/api/search?q=${query}&type=${activeTab}&page=${page}`);
             if (!res.ok) throw new Error("Failed to fetch media");
@@ -14,7 +14,6 @@ export const fetchMedia = createAsyncThunk(
         }
     }
 )
-
 const initialState = {
     query: "cat",
     activeTab: "photo",
@@ -26,7 +25,7 @@ const searchSlice = createSlice({
     reducers: {
         setQuery(state, action) {
             state.query = action.payload;
-             state.results = [];
+            state.results = [];
         },
         setActiveTab(state, action) {
             state.activeTab = action.payload;
