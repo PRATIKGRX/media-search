@@ -4,7 +4,8 @@ import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import ResultCard from "@/src/components/ResultCard";
 import { AddLikedItem, RemoveLikedItem } from "@/src/store/features/collectionSlice";
-import { ArrowLeft,Heart } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
+import Masonry from "react-masonry-css";
 
 const page = () => {
     const { id } = useParams();
@@ -13,7 +14,13 @@ const page = () => {
     const moreLikeThis = results.filter((item) => item._id !== id);
     const liked = useSelector((state) => state.collection.liked);
     const data = results.find((item) => item._id == id);
-    const isLiked = liked.some((item) => item._id === data._id)
+    const isLiked = liked.some((item) => item._id === data._id);
+    const breakpointColumnsObj = {
+        default: 4,
+        1100: 3,
+        700: 2,
+        500: 1
+    };
     console.log(id);
     const handleLike = () => {
         if (isLiked) {
@@ -31,10 +38,9 @@ const page = () => {
     if (!data) return <div>waait</div>
     return (
         <div>
-            <Link href={'/'}><ArrowLeft/></Link>
+            <Link href={'/'} className="flex"><div className="border p-2 my-2 flex gap-2 items-center"><ArrowLeft />Go Home</div></Link>
             <video
-                width="640"
-                height="360"
+                className="w-full h-auto"
                 autoPlay
                 loop
                 playsInline
@@ -44,14 +50,24 @@ const page = () => {
                 Your browser does not support the video tag.
             </video>
             <p>{data.thumb_description}</p>
-            <button onClick={handleLike} className="flex gap-1 items-center">
-                <Heart/>
-                {isLiked ? "Unlike" : "Like"}
-            </button>
-            <a href={data.video_url} download>download</a>
-            {moreLikeThis.map((item, index) => (
-                <ResultCard key={index} data={item} />
-            ))}
+            <div className="flex gap-2 items-center">
+                <a href={data.video_url} download className="border p-2">download</a>
+                <button onClick={handleLike} className={`flex items-center gap-1 p-2 border ${isLiked ? 'bg-white text-black' : 'bg-black text-white'} w-40 `}>
+                    <Heart />
+                    {isLiked ? "Unlike" : "Like"}
+                </button>
+            </div>
+
+            <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="flex gap-4"
+                columnClassName="flex flex-col gap-4"
+            >
+                {moreLikeThis.map((item, index) => (
+                    <ResultCard key={index} data={item} />
+                ))}
+            </Masonry>
+
         </div>
     )
 }

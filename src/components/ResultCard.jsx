@@ -9,10 +9,10 @@ const ResultCard = ({ data }) => {
     };
     const href = `/${routeMap[activeTab]}/${data._id}`;
     return (
-        <Link href={href}>
+        <Link href={href} className="row-span-1">
             <div className="flex flex-col w-full">
                 <div>
-                    <img src={data.thumbnail} className="aspect-square object-cover object-center w-full" alt={data.title} />
+                    <img src={data.thumbnail} className="object-cover object-center w-full" alt={data.title} />
                 </div>
                 <div>
                     <p>{data.thumb_description}</p>
