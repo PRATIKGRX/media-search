@@ -2,13 +2,13 @@ import { Search, Image, FilePlay } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import Button from '@mui/material/Button';
+
 const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) => {
-  const inputRef =useRef(null);
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
- 
-   useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignore special keys
       if (
         e.ctrlKey ||
         e.altKey ||
@@ -34,31 +34,42 @@ const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) =>
         e.preventDefault();
         handleSearch();
       }} className="flex gap-4 items-center">
-        <input  ref={inputRef} type="text" className='border p-2' value={search} onChange={(e) => setSearch(e.target.value)} />
+        <input ref={inputRef} type="text" className='border p-2' value={search} onChange={(e) => setSearch(e.target.value)} />
         <button type="submit" className="h-full border p-2 hover:cursor-pointer"><Search /></button>
       </form>
       <div className="flex items-center gap-4">
-        <button onClick={() => {
-          dispatch(setActiveTab("photo"));
+        <Button variant="outlined" onClick={() => {
+          if (activeTab !== 'photo') {
+            dispatch(setActiveTab("photo"));
+          }
         }} className="flex gap-1 items-center relative p-2 hover:cursor-pointer">
           {activeTab === 'photo' && (
             <motion.div layoutId="tab" className="absolute inset-0 border"></motion.div>
           )}
 
-          <Image className="relative z-10" /><span className="relative z-10">photo</span>
-        </button>
+          <Image className="relative z-10" /><span className="relative z-10 sm:block hidden">photo</span>
+        </Button>
 
-        <button onClick={() => {
-          dispatch(setActiveTab("video"));
-        }} className="flex gap-1 items-center relative p-2 hover:cursor-pointer">
+        <Button variant="outlined" sx={{
+    color: "#ff5722",
+    borderColor: "#ff5722",
+    "&:hover": {
+      borderColor: "#e64a19",
+      backgroundColor: "rgba(255, 87, 34, 0.04)",
+    },
+  }} onClick={() => {
+          if (activeTab !== 'video') {
+            dispatch(setActiveTab("video"));
+          }
+        }} className="flex gap-1 items-center relative p-2 hover:cursor-pointer ring-red-500">
           {activeTab === 'video' && (
             <motion.div layoutId="tab" className="absolute inset-0 border"></motion.div>
           )}
           <FilePlay className="relative z-10" />
-          <span className="relative z-10">
+          <span className="relative z-10 sm:block hidden">
             Video
           </span>
-        </button>
+        </Button>
       </div>
     </div>
   )

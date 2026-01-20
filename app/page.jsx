@@ -11,7 +11,7 @@ const page = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [pageCount, setPageCount] = useState(1);
-  const { query, activeTab, results } = useSelector((state) => state.search);
+  const { query, activeTab, results, loading } = useSelector((state) => state.search);
   const breakpointColumnsObj = {
     default: 4,
     1100: 3,
@@ -49,16 +49,19 @@ const page = () => {
   return (
     <div>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch} />
+      {loading && <div className='w-full flex justify-center'><span className="inline-block w-12 h-12 border-[5px] border-black border-b-transparent rounded-full animate-spin"></span>
+      </div>}
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="flex gap-4"
-        columnClassName="flex flex-col gap-4"
+        columnClassName="flex flex-col gap-4 p-4"
       >
         {results.map((item, index) => (
           <ResultCard key={index} data={item} />
         ))}
       </Masonry>
-      <div ref={observerRef} className='h-4'></div>
+      <div ref={observerRef}><div className='w-full flex justify-center'><span className="inline-block w-12 h-12 border-[5px] border-black border-b-transparent rounded-full animate-spin"></span>
+      </div></div>
     </div>
   )
 }

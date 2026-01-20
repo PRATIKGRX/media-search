@@ -38,7 +38,7 @@ const page = () => {
     }
   }
   return (
-    <div className='text-white'>
+    <div className='text-black p-4'>
       <Link href={'/'} className="flex"><div className="border p-2 my-2 flex gap-2 items-center"><ArrowLeft />Go Home</div></Link>
       <img src={data.img_url} alt={data.title} className="w-full" />
       <p>{data.description}</p>

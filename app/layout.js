@@ -24,8 +24,8 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="flex w-screen">
-            <div><SideBar/></div>
+          <div className="sm:flex w-screen">
+            <div className="fixed sm:static bottom-0 left-0 right-0"><SideBar/></div>
             <div className="max-h-screen overflow-auto flex-1">
               {children}
             </div>

@@ -17,7 +17,8 @@ export const fetchMedia = createAsyncThunk(
 const initialState = {
     query: "cat",
     activeTab: "photo",
-    results: []
+    results: [],
+    loading:true
 }
 const searchSlice = createSlice({
     name: "search",
@@ -35,13 +36,15 @@ const searchSlice = createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchMedia.pending,(state)=>{
+            state.loading=true
 
         })
         .addCase(fetchMedia.fulfilled,(state,action)=>{
             state.results.push(...action.payload);
+            state.loading=false
         })
         .addCase(fetchMedia.rejected,(state,action)=>{
-            
+            state.loading=true
         })
     }
 })

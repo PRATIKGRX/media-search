@@ -37,7 +37,7 @@ const page = () => {
     }
     if (!data) return <div>waait</div>
     return (
-        <div>
+        <div className="p-4">
             <Link href={'/'} className="flex"><div className="border p-2 my-2 flex gap-2 items-center"><ArrowLeft />Go Home</div></Link>
             <video
                 className="w-full h-auto"
