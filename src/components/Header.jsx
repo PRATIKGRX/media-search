@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Button from '@mui/material/Button';
 
-const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) => {
+const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSearch, search, setSearch }) => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -15,7 +15,6 @@ const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) =>
         e.metaKey ||
         e.key.length !== 1
       ) return;
-
       // Don't refocus if already typing in an input
       if (
         document.activeElement.tagName === "INPUT" ||
@@ -28,6 +27,26 @@ const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) =>
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+  async function fetchSuggestion(query) {
+    // if (!query || query.length < 2) {
+    //   setSuggestion([]);
+    //   return;
+    // }
+    const res = await fetch(`https://api.openwebninja.com/v1/web/autocomplete?q=${search}`, {
+      headers: { "X-API-Key": process.env.SEARCH_API_KEY }
+    });
+
+    const data = await res.json();
+    setSuggestion(data.suggestions || []);
+    console.log(data);
+  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchSuggestion(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   return (
     <div className="p-4 flex flex-col gap-4">
       <form onSubmit={(e) => {
@@ -51,13 +70,13 @@ const Header = ({ activeTab, setActiveTab, handleSearch, search, setSearch }) =>
         </Button>
 
         <Button variant="outlined" sx={{
-    color: "#ff5722",
-    borderColor: "#ff5722",
-    "&:hover": {
-      borderColor: "#e64a19",
-      backgroundColor: "rgba(255, 87, 34, 0.04)",
-    },
-  }} onClick={() => {
+          color: "#ff5722",
+          borderColor: "#ff5722",
+          "&:hover": {
+            borderColor: "#e64a19",
+            backgroundColor: "rgba(255, 87, 34, 0.04)",
+          },
+        }} onClick={() => {
           if (activeTab !== 'video') {
             dispatch(setActiveTab("video"));
           }

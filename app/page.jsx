@@ -10,6 +10,7 @@ const page = () => {
   const observerRef = useRef(null);
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
+  const [suggestion, setSuggestion] = useState([]);
   const [pageCount, setPageCount] = useState(1);
   const { query, activeTab, results, loading } = useSelector((state) => state.search);
   const breakpointColumnsObj = {
@@ -48,7 +49,7 @@ const page = () => {
 
   return (
     <div>
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch} />
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch} setSuggestion={setSuggestion} suggestion={suggestion} />
       {loading && <div className='w-full flex justify-center'><span className="inline-block w-12 h-12 border-[5px] border-black border-b-transparent rounded-full animate-spin"></span>
       </div>}
       <Masonry
