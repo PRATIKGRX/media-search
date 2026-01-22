@@ -13,7 +13,6 @@ const page = () => {
   const results = useSelector((state) => state.search.results);
   const moreLikeThis = results.filter((item) => item._id !== id);
   const data = results.find((item) => item._id === id);
-  console.log(id);
   if (!data) return <div>waait</div>
   const liked = useSelector((state) => state.collection.liked);
   const isLiked = liked.some((item) => item._id === data._id);

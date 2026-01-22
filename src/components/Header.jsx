@@ -1,10 +1,11 @@
 import { Search, Image, FilePlay } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from '@mui/material/Button';
 
 const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSearch, search, setSearch }) => {
+  const [activeIndex, setActiveIndex] = useState(-1)
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,17 +29,9 @@ const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSear
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
   async function fetchSuggestion(query) {
-    // if (!query || query.length < 2) {
-    //   setSuggestion([]);
-    //   return;
-    // }
-    const res = await fetch(`https://api.openwebninja.com/v1/web/autocomplete?q=${search}`, {
-      headers: { "X-API-Key": process.env.SEARCH_API_KEY }
-    });
-
+    const res = await fetch(`/api/autocomplete?q=${encodeURIComponent(query)}`);
     const data = await res.json();
     setSuggestion(data.suggestions || []);
-    console.log(data);
   }
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,7 +46,47 @@ const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSear
         e.preventDefault();
         handleSearch();
       }} className="flex gap-4 items-center">
-        <input ref={inputRef} type="text" className='border p-2' value={search} onChange={(e) => setSearch(e.target.value)} />
+        <div className="relative">
+          <input ref={inputRef} type="text" className='border p-2' value={search} onChange={(e) => {
+            setSearch(e.target.value);
+            setActiveIndex(-1);//resett
+          }}
+          onKeyDown={(e)=>{
+            if(!suggestion.length) return;
+            if(e.key === "ArrowDown"){
+              e.preventDefault();
+              setActiveIndex((prev)=>prev<suggestion.length-1? prev+1:0);
+            }
+            if(e.key==="ArrowUp"){
+              e.preventDefault();
+              setActiveIndex((prev)=>prev>0?prev-1:suggestion.length-1);
+            }
+            if(e.key==="Enter"&& activeIndex>=0){
+              e.preventDefault();
+              setSearch(suggestion[activeIndex]);
+              setSuggestion([]);
+              setActiveIndex(-1);
+            }
+            if(e.key==="Escape"){
+              setSuggestion([]);
+              setActiveIndex(-1);
+            }
+          }} />
+          <ul className="absolute left-0 right-0 z-20">
+            {suggestion.map((item, index) => (
+              <li key={index} onClick={() => {
+                setSearch(item);
+                setSuggestion([]);
+                setActiveIndex(-1);
+                inputRef.current?.focus();
+              }} className={`w-full p-2 cursor-pointer ${
+        index === activeIndex
+          ? "bg-stone-400"
+          : "bg-stone-200 hover:bg-stone-300"
+      }`}>{item}</li>
+            ))}
+          </ul>
+        </div>
         <button type="submit" className="h-full border p-2 hover:cursor-pointer"><Search /></button>
       </form>
       <div className="flex items-center gap-4">

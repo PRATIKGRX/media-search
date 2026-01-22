@@ -25,7 +25,6 @@ export async function GET(req) {
       },
     });
   } catch (err) {
-    console.error(err);
     return new Response("Server error", { status: 500 });
   }
 }

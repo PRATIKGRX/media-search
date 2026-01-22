@@ -17,6 +17,5 @@ export async function fetchImages(query, page) {
             download: item.links.download,
         }
     ));
-    console.log(data);
     return data;
 }

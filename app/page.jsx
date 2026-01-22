@@ -26,7 +26,6 @@ const page = () => {
   useEffect(() => {
     if (!query.trim()) return;
     dispatch(fetchMedia({ query, activeTab, page: pageCount }));
-    console.log(results)
   }, [query, activeTab, pageCount, dispatch]);
   useEffect(() => {
     setPageCount(1);

@@ -21,17 +21,12 @@ const page = () => {
         700: 2,
         500: 1
     };
-    console.log(id);
     const handleLike = () => {
         if (isLiked) {
             dispatch(RemoveLikedItem(data))
-            console.log("true");
-            console.log(liked);
         }
         else {
             dispatch(AddLikedItem(data));
-            console.log("false");
-            console.log(liked);
 
         }
     }

@@ -8,17 +8,17 @@ export async function GET(request) {
   if (!q || q.length < 2) return NextResponse.json({ suggestions: [] });
 
   try {
-    const { data } = await axios.get(
-      "https://api.openwebninja.com/v1/web/autocomplete",
-      {
-        params: { q },
-        headers: {
-          "X-API-Key": process.env.SEARCH_API_KEY,
-          "Accept": "application/json"
-        },
+    const response = await axios.get(
+      "https://serpapi.com/search.json",{
+        params: {
+        engine: "google_autocomplete",
+        q,
+        api_key: process.env.SERPAPI_API_KEY,
+      },
       }
     );
-    return NextResponse.json(data);
+    const suggestions=response.data?.suggestions.map((item)=>item.value).slice(0,6)
+    return NextResponse.json({suggestions});
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

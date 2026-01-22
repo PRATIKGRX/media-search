@@ -15,12 +15,10 @@ export async function GET(req) {
         let results = [];
         if (type === 'photo') {
             const unsplashImgResult = await fetchImages(query, page);
-            console.log("Unsplash Results:", unsplashImgResult);
             results.push(...unsplashImgResult)
         }
         if (type === 'video') {
             const pexelsVideoResult = await fetchVideos(query, page);
-            console.log("Pexels Results:", pexelsVideoResult);
             results.push(...pexelsVideoResult)
         }
         return Response.json({

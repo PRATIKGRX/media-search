@@ -12,6 +12,5 @@ export async function fetchVideos(query, page = 1) {
         thumbnail: item.image,
         video_url: item.video_files[0].link,
     }))
-    console.log(data);
     return data;
 }
