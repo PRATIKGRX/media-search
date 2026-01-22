@@ -35,16 +35,22 @@ const page = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !loading) {
           setPageCount((prev) => prev + 1);
         }
       },
-      { rootMargin: "100px" }
+      {
+        root: null,
+        rootMargin: "400px 0px",
+        threshold: 0
+      }
     );
 
     observer.observe(observerRef.current);
+
     return () => observer.disconnect();
-  }, [query]);
+  }, [loading, query, activeTab]);
+
 
   return (
     <div>

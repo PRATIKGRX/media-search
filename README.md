@@ -1,9 +1,9 @@
 ## Features
 
-- Search suggestions in the search bar
+- Search suggestions in the search bar(done)
 - Dark / Light mode support
 - User authentication (login system)
-- Video hover preview that plays a short portion of the content without opening the full page
+- Video hover preview that plays a short portion of the content without opening the full page(done)
 
 ## Fixes & Improvements
 
