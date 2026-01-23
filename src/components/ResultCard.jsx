@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
+import {motion} from 'framer-motion';
 const ResultCard = ({ data }) => {
     const activeTab = useSelector((state) => state.search.activeTab);
     const routeMap = {
@@ -38,14 +39,14 @@ const ResultCard = ({ data }) => {
 
     return (
         <Link href={href} className="row-span-1">
-            <div className="flex flex-col w-full" onMouseEnter={startPreview} onMouseLeave={stopPreview}>
+            <motion.div initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} className="flex flex-col w-full" onMouseEnter={startPreview} onMouseLeave={stopPreview}>
                 <div>
                     <img src={currentImg} className="object-cover object-center w-full" alt={data.title} />
                 </div>
                 <div>
                     <p>{data.thumb_description}</p>
                 </div>
-            </div>
+            </motion.div>
         </Link>
     )
 }

@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMedia, setQuery, setActiveTab } from '@/src/store/features/searchSlice';
 import React from 'react'
+import { motion } from 'framer-motion';
 import ResultCard from '@/src/components/ResultCard';
 import Masonry from "react-masonry-css";
 import Header from '@/src/components/Header';
@@ -57,15 +58,17 @@ const page = () => {
       <Header activeTab={activeTab} setActiveTab={setActiveTab} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch} setSuggestion={setSuggestion} suggestion={suggestion} />
       {loading && <div className='w-full flex justify-center'><span className="inline-block w-12 h-12 border-[5px] border-black border-b-transparent rounded-full animate-spin"></span>
       </div>}
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="flex gap-4"
-        columnClassName="flex flex-col gap-4 p-4"
-      >
-        {results.map((item, index) => (
-          <ResultCard key={index} data={item} />
-        ))}
-      </Masonry>
+     
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="flex gap-4"
+          columnClassName="flex flex-col gap-4 p-4"
+        >
+          {results.map((item, index) => (
+            <ResultCard key={index} data={item} />
+          ))}
+        </Masonry>
+      
       <div ref={observerRef}><div className='w-full flex justify-center'><span className="inline-block w-12 h-12 border-[5px] border-black border-b-transparent rounded-full animate-spin"></span>
       </div></div>
     </div>

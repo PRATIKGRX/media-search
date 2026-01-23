@@ -2,15 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./provider";
 import SideBar from "@/src/components/SideBar";
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { LayoutGroup } from "framer-motion";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Media Search",
@@ -21,12 +14,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-[#F0F0DB]`}
       >
         <Providers>
           <div className="sm:flex w-screen">
-            <div className="fixed sm:static bottom-0 left-0 right-0"><SideBar/></div>
-            <div className="max-h-screen overflow-auto flex-1">
+            <div className="fixed sm:static bottom-0 left-0 right-0">
+              <LayoutGroup>
+                <SideBar />
+              </LayoutGroup></div>
+            <div className="max-h-screen overflow-auto flex-1 ">
               {children}
             </div>
           </div>

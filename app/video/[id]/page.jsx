@@ -59,7 +59,7 @@ const page = () => {
                 columnClassName="flex flex-col gap-4"
             >
                 {moreLikeThis.map((item, index) => (
-                    <ResultCard key={index} data={item} />
+                    <ResultCard key={`more-${index}`} data={item} />
                 ))}
             </Masonry>
 
