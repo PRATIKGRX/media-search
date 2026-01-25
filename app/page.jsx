@@ -64,7 +64,7 @@ const page = () => {
   return (
     <div>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} setPageCount={setPageCount} handleSearch={handleSearch} search={search} setSearch={setSearch} setSuggestion={setSuggestion} suggestion={suggestion} />
-      {loading && <div className='w-full flex justify-center'><span class="loader"></span>
+      {loading && <div className='w-full flex justify-center'><span className="loader"></span>
       </div>}
 
       <Masonry

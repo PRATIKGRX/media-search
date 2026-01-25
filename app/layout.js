@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <div className="sm:flex w-screen">
-            <div className="fixed sm:static bottom-0 left-0 right-0">
+            <div className="fixed sm:static z-999 bottom-0 left-0 right-0">
               <LayoutGroup>
                 <SideBar />
               </LayoutGroup></div>
