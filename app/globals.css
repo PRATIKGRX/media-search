@@ -1,1 +1,27 @@
 @import "tailwindcss";
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #30364F; /* main color */
+  box-shadow: 32px 0 #30364F, -32px 0 #30364F; /* main color for side dots */
+  position: relative;
+  animation: flash 0.5s ease-out infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #30364F33; /* semi-transparent */
+    box-shadow: 32px 0 #30364F33, -32px 0 #30364F; /* left semi, right main */
+  }
+  50% {
+    background-color: #30364F;   /* full opacity */
+    box-shadow: 32px 0 #30364F33, -32px 0 #30364F33; /* both semi */
+  }
+  100% {
+    background-color: #30364F33; /* semi-transparent */
+    box-shadow: 32px 0 #30364F, -32px 0 #30364F33; /* left main, right semi */
+  }
+}
+
+      

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 const ResultCard = ({ data }) => {
     const activeTab = useSelector((state) => state.search.activeTab);
     const routeMap = {
@@ -39,15 +39,34 @@ const ResultCard = ({ data }) => {
 
     return (
         <Link href={href} className="row-span-1">
-            <motion.div initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} className="flex flex-col w-full" onMouseEnter={startPreview} onMouseLeave={stopPreview}>
-                <div>
-                    <img src={currentImg} className="object-cover object-center w-full" alt={data.title} />
+            <motion.div
+                layout
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col w-full"
+                onMouseEnter={startPreview}
+                onMouseLeave={stopPreview}
+            >
+                <div className="relative w-full overflow-hidden bg-gray-200 aspect-4/5">
+                    <motion.img 
+                    initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                        src={currentImg}
+                        alt={data.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                    />
                 </div>
-                <div>
-                    <p>{data.thumb_description}</p>
+
+
+                <div className="mt-2">
+                    <p className="text-sm">{data.thumb_description}</p>
                 </div>
             </motion.div>
         </Link>
+
     )
 }
 

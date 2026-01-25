@@ -35,11 +35,18 @@ const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSear
     setSuggestion(data.suggestions || []);
   }
   useEffect(() => {
+    if (search.trim().length < 2) {
+      setSuggestion([]);
+      return;
+    }
+
     const timer = setTimeout(() => {
       fetchSuggestion(search);
     }, 300);
+
     return () => clearTimeout(timer);
   }, [search]);
+
 
   return (
     <div className="p-4 flex flex-col gap-4">
@@ -76,7 +83,7 @@ const Header = ({ setSuggestion, suggestion, activeTab, setActiveTab, handleSear
               }
             }} />
           <AnimatePresence>
-            {inputFocused && (
+            {inputFocused && suggestion.length > 0 && (
               <motion.ul key="inputfocus" variants={{
                 hidden: { opacity: 0 },
                 visible: {
